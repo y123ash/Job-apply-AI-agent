@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Application AI Agent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 30px;
+            padding-bottom: 50px;
+            color: #343a40;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+            padding: 3rem;
+            border-radius: 1rem;
+            margin-bottom: 2.5rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+            color: white;
+            font-weight: 600;
+            padding: 1.25rem;
+            border-bottom: none;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0957cc 0%, #0080d6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #198754 0%, #20c997 100%);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-success:hover {
+            background: linear-gradient(135deg, #146c43 0%, #1aa179 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+        }
+        .alert {
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        .form-control {
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            border-color: #86b7fe;
+            background-color: #fff;
+        }
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #0d6efd;
+        }
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+        .upload-area:hover {
+            border-color: #0d6efd;
+            background-color: #f1f8ff;
+        }
+        .upload-icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+        .upload-text {
+            font-size: 1.1rem;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .upload-hint {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .file-input {
+            display: none;
+        }
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        .step-text {
+            flex: 1;
+        }
+        .info-card {
+            background-color: #e9f7fe;
+            border-left: 4px solid #0d6efd;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-section text-center">
+            <h1 class="display-4 fw-bold mb-3">Job Application AI Agent</h1>
+            <p class="lead fs-4 mb-4">Automate your job search and generate tailored CVs with AI</p>
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-8">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h5>Find Jobs</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <h5>Tailor CVs</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h5>Apply Faster</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mb-4" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="info-card mb-4">
+            <h5><i class="fas fa-info-circle me-2"></i>How It Works</h5>
+            <div class="workflow-step">
+                <div class="step-number">1</div>
+                <div class="step-text">Upload your CV template (.docx format)</div>
+            </div>
+            <div class="workflow-step">
+                <div class="step-number">2</div>
+                <div class="step-text">Search for jobs by title and location</div>
+            </div>
+            <div class="workflow-step">
+                <div class="step-number">3</div>
+                <div class="step-text">The system tailors your CV for each job by highlighting relevant skills</div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-upload me-2"></i> Step 1: Upload CV Template</h5>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p>Upload your CV template that will be tailored for each job</p>
+                        
+                        <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_cv') }}" id="cv-upload-form">
+                            <label for="cv_file" class="upload-area" id="upload-label">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h3 class="upload-text">Drag & Drop your CV here</h3>
+                                <p class="upload-hint">or click to browse files</p>
+                                <p class="upload-hint text-muted">(Only .docx files are supported)</p>
+                            </label>
+                            <input type="file" name="cv_file" id="cv_file" class="file-input" accept=".docx" required>
+                            
+                            <div id="file-selected" class="alert alert-info d-none mb-3">
+                                <i class="fas fa-file-word me-2"></i>
+                                <span id="file-name">No file selected</span>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100" id="upload-button">
+                                <i class="fas fa-upload me-2"></i>Upload CV Template
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-search me-2"></i> Step 2: Search for Jobs</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="{{ url_for('search_jobs') }}" method="post">
+                            <div class="mb-3">
+                                <label for="keyword" class="form-label">Job Title</label>
+                                <input type="text" class="form-control" id="keyword" name="keyword" placeholder="e.g., Software Engineer" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" name="location" placeholder="e.g., Remote, Berlin" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="max_jobs" class="form-label">Number of Jobs</label>
+                                <input type="number" class="form-control" id="max_jobs" name="max_jobs" value="5" min="1" max="20">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100" id="search-button">
+                                <i class="fas fa-search me-2"></i>Search Jobs
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5 text-muted">
+            <p>Job Application AI Agent helps you find relevant jobs and tailor your CV to match job requirements</p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('cv_file');
+            const uploadLabel = document.getElementById('upload-label');
+            const fileSelected = document.getElementById('file-selected');
+            const fileName = document.getElementById('file-name');
+            const uploadButton = document.getElementById('upload-button');
+            const searchButton = document.getElementById('search-button');
+            
+            // Check if CV is already uploaded
+            {% if session.get('cv_template') %}
+                fileSelected.classList.remove('d-none');
+                fileName.textContent = "CV template uploaded successfully";
+                uploadButton.innerHTML = '<i class="fas fa-check-circle me-2"></i>CV Template Uploaded';
+                uploadButton.classList.remove('btn-primary');
+                uploadButton.classList.add('btn-success');
+            {% endif %}
+            
+            uploadLabel.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    fileName.textContent = fileInput.files[0].name;
+                    fileSelected.classList.remove('d-none');
+                    uploadLabel.style.borderColor = '#0d6efd';
+                } else {
+                    fileSelected.classList.add('d-none');
+                    uploadLabel.style.borderColor = '#dee2e6';
+                }
+            });
+            
+            // Drag and drop functionality
+            uploadLabel.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadLabel.style.borderColor = '#0d6efd';
+                uploadLabel.style.backgroundColor = '#f1f8ff';
+            });
+            
+            uploadLabel.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadLabel.style.borderColor = '#dee2e6';
+                uploadLabel.style.backgroundColor = '#f8f9fa';
+            });
+            
+            uploadLabel.addEventListener('drop', function(e) {
+                e.preventDefault();
+                
+                if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    if (fileInput.files[0].name.endsWith('.docx')) {
+                        fileName.textContent = fileInput.files[0].name;
+                        fileSelected.classList.remove('d-none');
+                        
+                        // Auto-submit the form when a file is dropped
+                        document.getElementById('cv-upload-form').submit();
+                    } else {
+                        alert('Please upload a .docx file');
+                    }
+                }
+                
+                uploadLabel.style.borderColor = '#dee2e6';
+                uploadLabel.style.backgroundColor = '#f8f9fa';
+            });
+        });
+    </script>
+</body>
+</html> 

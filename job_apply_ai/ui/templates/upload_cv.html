@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload CV Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 30px;
+            padding-bottom: 50px;
+            color: #343a40;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+            padding: 2.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2.5rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .header-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+        }
+        .upload-area:hover {
+            border-color: #0d6efd;
+            background-color: #f1f8ff;
+        }
+        .upload-icon {
+            font-size: 3.5rem;
+            color: #0d6efd;
+            margin-bottom: 1.5rem;
+        }
+        .upload-text {
+            font-size: 1.2rem;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .upload-hint {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0957cc 0%, #0080d6 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #adb5bd 100%);
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #5a6268 0%, #98a1a9 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+        .file-input {
+            display: none;
+        }
+        .info-card {
+            background-color: #e9f7fe;
+            border-left: 4px solid #0d6efd;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .info-icon {
+            font-size: 1.5rem;
+            color: #0d6efd;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <div class="header-icon">
+                <i class="fas fa-file-upload"></i>
+            </div>
+            <h1 class="display-5 fw-bold mb-3">Upload Your CV Template</h1>
+            <p class="lead fs-4 mb-0">We'll use this template to create tailored versions for each job</p>
+        </div>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show mb-4" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="info-card mb-4">
+                    <div class="d-flex align-items-center">
+                        <div class="info-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-2">Important Information</h5>
+                            <p class="mb-0">Please upload a Microsoft Word (.docx) file that will be used as your CV template. Make sure your CV includes sections for skills that can be tailored for each job application.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_cv') }}">
+                            <label for="cv_file" class="upload-area" id="upload-label">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h3 class="upload-text">Drag & Drop your CV here</h3>
+                                <p class="upload-hint">or click to browse files</p>
+                                <p class="upload-hint text-muted">(Only .docx files are supported)</p>
+                            </label>
+                            <input type="file" name="cv_file" id="cv_file" class="file-input" accept=".docx" required>
+                            
+                            <div id="file-selected" class="alert alert-info d-none mb-4">
+                                <i class="fas fa-file-word me-2"></i>
+                                <span id="file-name">No file selected</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                                    <i class="fas fa-arrow-left me-2"></i>Back
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-upload me-2"></i>Upload CV
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('cv_file');
+            const uploadLabel = document.getElementById('upload-label');
+            const fileSelected = document.getElementById('file-selected');
+            const fileName = document.getElementById('file-name');
+            
+            uploadLabel.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    fileName.textContent = fileInput.files[0].name;
+                    fileSelected.classList.remove('d-none');
+                    uploadLabel.style.borderColor = '#0d6efd';
+                } else {
+                    fileSelected.classList.add('d-none');
+                    uploadLabel.style.borderColor = '#dee2e6';
+                }
+            });
+            
+            // Drag and drop functionality
+            uploadLabel.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadLabel.style.borderColor = '#0d6efd';
+                uploadLabel.style.backgroundColor = '#f1f8ff';
+            });
+            
+            uploadLabel.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadLabel.style.borderColor = '#dee2e6';
+                uploadLabel.style.backgroundColor = '#f8f9fa';
+            });
+            
+            uploadLabel.addEventListener('drop', function(e) {
+                e.preventDefault();
+                
+                if (e.dataTransfer.files.length > 0) {
+                    fileInput.files = e.dataTransfer.files;
+                    if (fileInput.files[0].name.endsWith('.docx')) {
+                        fileName.textContent = fileInput.files[0].name;
+                        fileSelected.classList.remove('d-none');
+                    } else {
+                        alert('Please upload a .docx file');
+                    }
+                }
+                
+                uploadLabel.style.borderColor = '#dee2e6';
+                uploadLabel.style.backgroundColor = '#f8f9fa';
+            });
+        });
+    </script>
+</body>
+</html> 
