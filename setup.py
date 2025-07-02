@@ -1,5 +1,6 @@
 """
 Setup script for the Job Application AI Agent package.
+now its editable
 """
 
 from setuptools import setup, find_packages
