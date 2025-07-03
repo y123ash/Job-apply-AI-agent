@@ -391,9 +391,13 @@ def main():
     
     # Create basic templates if they don't exist
     create_basic_templates(templates_dir)
-    
+    ngrok.kill()
+    app.config['DEBUG'] = True
+    public_url = ngrok.connect(5050)
+    print("🌐 PUBLIC NGROK LINK:", public_url)
     # Run the app
-    app.run(debug=True, host='0.0.0.0', port=5050)
+    serve(app, host="0.0.0.0", port=5050)
+    #app.run(debug=True, host='0.0.0.0', port=5050)
 
 def create_basic_templates(templates_dir):
     """Create basic HTML templates if they don't exist."""
