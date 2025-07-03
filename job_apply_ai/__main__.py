@@ -58,7 +58,7 @@ def main():
     if args.command == 'web':
         # Import here to avoid circular imports
         from job_apply_ai.ui.app import app
-        app.run(host=args.host, port=args.port, debug=args.debug)
+        app.run(host=args.host, port=args.port, debug=True)
         
     elif args.command == 'scrape':
         from job_apply_ai.scraper.linkedin import LinkedInScraper
